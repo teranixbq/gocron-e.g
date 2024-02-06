@@ -3,10 +3,11 @@ package main
 import (
 	"gocroneg/config"
 	"gocroneg/routes"
+	"gocroneg/scheduler"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
 func main() {
@@ -14,6 +15,7 @@ func main() {
 
 	db := config.InitPostgresDB()
 	routes.RouteInit(f, db)
+	go scheduler.Scheduler(db)
 	
 	f.Use(cors.New())
 
