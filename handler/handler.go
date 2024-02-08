@@ -49,8 +49,9 @@ func (eg *handler) GetAll(f *fiber.Ctx) error {
 		})
 	}
 
+	response := dto.ListModelToResponse(result)
 	return f.Status(200).JSON(fiber.Map{
 		"message":"success",
-		"data":result,
+		"data":response,
 	})
 }

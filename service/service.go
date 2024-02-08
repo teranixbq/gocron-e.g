@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"gocroneg/model"
 	"gocroneg/repository"
 )
@@ -12,7 +11,7 @@ type service struct {
 
 type ServiceInterface interface {
 	Insert(data model.User) error
-	Get() (model.User, error)
+	Get() ([]model.User, error)
 }
 
 func NewService(repository repository.RepositoryInterface) ServiceInterface {
@@ -24,17 +23,17 @@ func NewService(repository repository.RepositoryInterface) ServiceInterface {
 func (eg *service) Insert(data model.User) error {
 	err := eg.repository.Insert(data)
 	if err != nil {
-		return errors.New("error insert")
+		return err
 	}
 
 	return nil
 }
 
-func (eg *service) Get() (model.User, error) {
-	data,err := eg.repository.Get()
+func (eg *service) Get() ([]model.User, error) {
+	data, err := eg.repository.Get()
 	if err != nil {
-		return model.User{},errors.New("error data")
+		return nil, err
 	}
-	
-	return data,nil
+
+	return data, nil
 }

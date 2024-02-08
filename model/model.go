@@ -4,11 +4,11 @@ import "gorm.io/gorm"
 
 type User struct {
 	gorm.Model
-	Name   string
-	Age    string
+	Name    string
+	Age     string
 	Address string
-	Telp   string
-	Email  string
+	Telp    string
+	Email   string
 }
 
 func (User) TableName() string {

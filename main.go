@@ -14,9 +14,10 @@ func main() {
 	f := fiber.New()
 
 	db := config.InitPostgresDB()
-	routes.RouteInit(f, db)
-	go scheduler.Scheduler(db)
-	
+	rdb := config.InitRedis()
+	routes.RouteInit(f, db, rdb)
+	go scheduler.Scheduler(db,rdb)
+
 	f.Use(cors.New())
 
 	f.Use(logger.New(logger.Config{
